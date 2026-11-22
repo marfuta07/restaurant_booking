@@ -1,0 +1,60 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}Мои брони — DF2{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Мои бронирования</h1>
+
+    {% if bookings %}
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Столик</th>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Гостей</th>
+                        <th>Статус</th>
+                        <th>Создано</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                        <tr>
+                            <td>№{{ b.table.number }} (до {{ b.table.capacity }})</td>
+                            <td>{{ b.date|date:"d.m.Y" }}</td>
+                            <td>{{ b.time|time:"H:i" }}</td>
+                            <td>{{ b.guests_count }}</td>
+                            <td>
+                                {% if b.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">Ожидает</span>
+                                {% elif b.status == 'confirmed' %}
+                                    <span class="badge bg-success">Подтверждено</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Отменено</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ b.created_at|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                {% if b.status != 'cancelled' %}
+                                    <a href="{% url 'booking:booking_edit' b.pk %}" class="btn btn-sm btn-outline-primary">Изменить</a>
+                                    <a href="{% url 'booking:booking_cancel' b.pk %}" class="btn btn-sm btn-outline-danger">Отменить</a>
+                                {% else %}
+                                    <span class="text-muted">—</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            У вас пока нет бронирований.
+            <a href="{% url 'booking:booking' %}" class="alert-link">Забронировать столик</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

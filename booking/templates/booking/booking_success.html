@@ -1,0 +1,38 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}Бронь подтверждена — DF2{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card p-4 shadow-sm text-center">
+                <div class="display-1 text-success mb-3">✓</div>
+                <h2 class="mb-3">Бронирование принято!</h2>
+                <p class="lead">
+                    Спасибо, {{ booking.user.username }}! Мы свяжемся с вами для подтверждения.
+                </p>
+
+                <div class="card bg-light my-4">
+                    <div class="card-body text-start">
+                        <h5 class="mb-3">Детали брони</h5>
+                        <p class="mb-1"><strong>Столик:</strong> №{{ booking.table.number }} (до {{ booking.table.capacity }} чел.)</p>
+                        <p class="mb-1"><strong>Дата:</strong> {{ booking.date|date:"d.m.Y" }}</p>
+                        <p class="mb-1"><strong>Время:</strong> {{ booking.time|time:"H:i" }}</p>
+                        <p class="mb-1"><strong>Гостей:</strong> {{ booking.guests_count }}</p>
+                        <p class="mb-0">
+                            <strong>Статус:</strong>
+                            <span class="badge bg-warning text-dark">Ожидает подтверждения</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 justify-content-center">
+                    <a href="{% url 'booking:my_bookings' %}" class="btn btn-primary">Мои брони</a>
+                    <a href="{% url 'booking:home' %}" class="btn btn-outline-secondary">На главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'booking/base.html' %}
+{% load static %}
+
+{% block title %}О ресторане — DF2{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">О ресторане DF2</h1>
+
+    <div class="row mb-5">
+        <div class="col-md-8 mx-auto">
+            <h3>Наша история</h3>
+            <p>
+                Ресторан DF2 открылся в 2015 году с простой идеей — создать место, 
+                где современная кухня встречается с уютной атмосферой. 
+                За годы работы мы стали любимым местом для семейных ужинов и деловых встреч.
+            </p>
+
+            <h3 class="mt-4">Миссия</h3>
+            <p>
+                Мы верим, что еда — это не просто топливо. Это способ собрать людей вместе, 
+                создать воспоминания и подарить радость. Наша миссия — делать каждый визит особенным.
+            </p>
+
+            <h3 class="mt-4">Ценности</h3>
+            <ul>
+                <li><strong>Качество</strong> — только свежие продукты от проверенных поставщиков.</li>
+                <li><strong>Гостеприимство</strong> — каждый гость для нас — желанный.</li>
+                <li><strong>Традиции</strong> — уважаем классику, но не боимся экспериментировать.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3 class="text-center mb-4">Наша команда</h3>
+    <div class="row g-4">
+        {% for member in team %}
+            <div class="col-md-4 text-center">
+                <div class="card h-100 shadow-sm">
+                    {% if member.photo %}
+                        <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}" style="height: 250px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 250px;">
+                            <span class="fs-1">👤</span>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ member.name }}</h5>
+                        <p class="card-text text-muted">{{ member.role }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center text-muted">
+                <p>Информация о команде скоро появится.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

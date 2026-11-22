@@ -1,0 +1,52 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}Контакты — DF2{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">Контакты</h1>
+
+    <div class="row g-4 mb-5 justify-content-center">
+        <div class="col-md-4">
+            <div class="card h-100 p-3 shadow-sm text-center">
+                <h5>📍 Адрес</h5>
+                <p class="mb-0">ул. Примерная, 1<br>Москва</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-3 shadow-sm text-center">
+                <h5>📞 Телефон</h5>
+                <p class="mb-0">+7 (999) 123-45-67</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-3 shadow-sm text-center">
+                <h5>✉️ Email</h5>
+                <p class="mb-0">hello@df2.ru</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card p-4 shadow-sm">
+                <h3 class="mb-3">Написать нам</h3>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

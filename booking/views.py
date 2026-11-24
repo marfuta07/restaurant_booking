@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
-from .models import Service, TeamMember, Table, Booking
+from .models import Service, TeamMember, Booking
 from .forms import BookingForm, ContactForm, RegisterForm
 
 
@@ -49,11 +49,13 @@ def booking_view(request):
         form = BookingForm()
     return render(request, 'booking/booking.html', {'form': form})
 
+
 @login_required
 def booking_success_view(request, pk):
     """Страница подтверждения брони."""
     booking = get_object_or_404(Booking, pk=pk, user=request.user)
     return render(request, 'booking/booking_success.html', {'booking': booking})
+
 
 @login_required
 def my_bookings_view(request):
